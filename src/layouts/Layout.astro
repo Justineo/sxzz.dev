@@ -20,7 +20,7 @@ const { title, description } = Astro.props
     {description && <meta name="description" content={description} />}
   </head>
   <body
-    class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased"
+    class="bg-gray-50 dark:bg-neutral-950 text-gray-900 dark:text-gray-100 antialiased selection:bg-gray-900/10 dark:selection:bg-gray-100/10"
   >
     <slot />
   </body>

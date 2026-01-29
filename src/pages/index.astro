@@ -1,151 +1,100 @@
 ---
 import Layout from '../layouts/Layout.astro'
+
+const links = {
+  creator: [
+    { name: 'tsdown', href: 'https://tsdown.dev' },
+    { name: 'Vue Macros', href: 'https://vue-macros.dev' },
+    { name: 'Elk', href: 'https://github.com/elk-zone/elk' },
+  ],
+  team: [
+    { name: 'Vue', href: 'https://vuejs.org' },
+    { name: 'Vite', href: 'https://vitejs.dev' },
+    { name: 'VueUse', href: 'https://vueuse.org' },
+    { name: 'unjs', href: 'https://unjs.io' },
+    { name: 'unplugin', href: 'https://github.com/unplugin' },
+    { name: 'Oxc', href: 'https://oxc-project.github.io' },
+  ],
+  social: [
+    { icon: 'i-simple-icons-github', href: 'https://github.com/sxzz', label: 'GitHub' },
+    { icon: 'i-simple-icons-bluesky', href: 'https://bsky.app/profile/sxzz.dev', label: 'Bluesky' },
+    { icon: 'i-simple-icons-x', href: 'https://x.com/sanxiaozhizi', label: 'X' },
+  ],
+}
 ---
 
 <Layout
   title="Kevin Deng - Open Source Enthusiast"
   description="Kevin Deng is an open-source enthusiast exploring front-end development. Creator of tsdown, Vue Macros, and Elk. Core team member of Vue, Vite, and more."
 >
-  <main class="min-h-screen flex items-center justify-center p-6 md:p-12">
-    <div class="max-w-2xl w-full">
-      <!-- Name -->
-      <h1
-        class="text-5xl md:text-6xl font-bold text-gray-900 dark:text-gray-100 mb-6"
-      >
-        Kevin Deng
-      </h1>
+  <main class="min-h-dvh flex items-center justify-center px-6 py-16 md:px-12">
+    <div class="max-w-xl w-full space-y-8">
+      <header>
+        <h1
+          class="text-4xl md:text-5xl font-700 tracking-tight text-gray-950 dark:text-white"
+        >
+          Kevin Deng
+        </h1>
+        <p class="mt-3 text-lg text-gray-500 dark:text-gray-400">
+          Open-source enthusiast
+        </p>
+      </header>
 
-      <!-- Bio -->
-      <p
-        class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed mb-12"
-      >
-        An open-source enthusiast
-      </p>
+      <div class="space-y-10">
+        <section>
+          <h2
+            class="text-xs font-600 text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4"
+          >
+            Creator
+          </h2>
+          <div class="flex flex-wrap gap-2">
+            {links.creator.map((link) => (
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center px-3.5 py-1.5 text-sm font-500 rounded-full border border-gray-200 dark:border-neutral-800 text-gray-700 dark:text-gray-300 hover:border-gray-400 dark:hover:border-neutral-600 hover:text-gray-950 dark:hover:text-white transition-colors duration-150"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+        </section>
 
-      <!-- Creator Section -->
-      <section class="mb-10">
-        <h2
-          class="text-sm font-semibold text-gray-500 dark:text-gray-500 uppercase tracking-wider mb-4"
-        >
-          Creator
-        </h2>
-        <div class="flex flex-wrap gap-3">
-          <a
-            href="https://tsdown.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+        <section>
+          <h2
+            class="text-xs font-600 text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4"
           >
-            tsdown
-          </a>
-          <a
-            href="https://vue-macros.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-          >
-            Vue Macros
-          </a>
-          <a
-            href="https://github.com/elk-zone/elk"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-          >
-            Elk
-          </a>
-        </div>
-      </section>
+            Team Member
+          </h2>
+          <div class="flex flex-wrap gap-2">
+            {links.team.map((link) => (
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center px-3.5 py-1.5 text-sm font-500 rounded-full border border-gray-200 dark:border-neutral-800 text-gray-700 dark:text-gray-300 hover:border-gray-400 dark:hover:border-neutral-600 hover:text-gray-950 dark:hover:text-white transition-colors duration-150"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+        </section>
+      </div>
 
-      <!-- Team Member Section -->
-      <section>
-        <h2
-          class="text-sm font-semibold text-gray-500 dark:text-gray-500 uppercase tracking-wider mb-4"
-        >
-          Team Member
-        </h2>
-        <div class="flex flex-wrap gap-3">
+      <footer class="flex items-center gap-5">
+        {links.social.map((link) => (
           <a
-            href="https://vuejs.org"
+            href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+            class="text-gray-400 dark:text-gray-600 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-150"
+            aria-label={link.label}
           >
-            Vue
+            <div class:list={[link.icon, 'w-5 h-5']} />
           </a>
-          <a
-            href="https://vitejs.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-          >
-            Vite
-          </a>
-          <a
-            href="https://vueuse.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-          >
-            VueUse
-          </a>
-          <a
-            href="https://unjs.io"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-          >
-            unjs
-          </a>
-          <a
-            href="https://github.com/unplugin"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-          >
-            unplugin
-          </a>
-          <a
-            href="https://oxc-project.github.io"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-          >
-            Oxc
-          </a>
-        </div>
-      </section>
-
-      <!-- Social Links -->
-      <section class="mt-12 flex gap-6">
-        <a
-          href="https://github.com/sxzz"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
-          aria-label="GitHub"
-        >
-          <div class="i-simple-icons-github w-6 h-6"></div>
-        </a>
-        <a
-          href="https://bsky.app/profile/sxzz.dev"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
-          aria-label="Bluesky"
-        >
-          <div class="i-simple-icons-bluesky w-6 h-6"></div>
-        </a>
-        <a
-          href="https://x.com/sanxiaozhizi"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
-          aria-label="X (Twitter)"
-        >
-          <div class="i-simple-icons-x w-6 h-6"></div>
-        </a>
-      </section>
+        ))}
+      </footer>
     </div>
   </main>
 </Layout>
