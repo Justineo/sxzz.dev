@@ -5,6 +5,9 @@ const schema = z.object({
   title: z.string(),
   date: z.coerce.date(),
   description: z.string(),
+  image: z.string().optional(),
+  updatedAt: z.coerce.date().optional(),
+  tags: z.array(z.string()).optional(),
 })
 
 const posts = defineCollection({

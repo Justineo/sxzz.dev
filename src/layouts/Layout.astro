@@ -11,9 +11,10 @@ interface Props {
   image?: string
   ogType?: 'website' | 'article'
   publishedDate?: Date
+  updatedDate?: Date
 }
 
-const { title, description, availableLangs, image, ogType = 'website', publishedDate } = Astro.props
+const { title, description, availableLangs, image, ogType = 'website', publishedDate, updatedDate } = Astro.props
 const pathname = Astro.url.pathname
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
@@ -64,13 +65,19 @@ const hreflangLangs = isMusingsPage
     {ogType === 'article' && publishedDate && (
       <meta property="article:published_time" content={publishedDate.toISOString()} />
     )}
+    {ogType === 'article' && updatedDate && (
+      <meta property="article:modified_time" content={updatedDate.toISOString()} />
+    )}
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
     <meta name="twitter:image" content={ogImage} />
 
+    <link rel="alternate" type="application/rss+xml" title="Kevin Deng" href={new URL('/rss.xml', site).href} />
+
     <slot name="head" />
+    <script defer data-domain="sxzz.dev" src="https://analytics.sxzz.dev/js/script.js"></script>
     <script is:inline>
       ;(function () {
         const stored = localStorage.getItem('theme')
