@@ -183,6 +183,19 @@ const showLangSwitcher = !basePath.startsWith('/musings')
       if (!el.contains(e.target as Node)) el.removeAttribute('open')
     })
   })
+
+  document.querySelectorAll('.lang-switcher').forEach((el) => {
+    el.addEventListener('toggle', () => {
+      if ((el as HTMLDetailsElement).open) {
+        const menu = el.querySelector('.lang-switcher-menu') as HTMLElement
+        if (menu) {
+          menu.style.animation = 'none'
+          menu.offsetHeight
+          menu.style.animation = ''
+        }
+      }
+    })
+  })
 </script>
 
 <style is:global>
@@ -190,17 +203,19 @@ const showLangSwitcher = !basePath.startsWith('/musings')
     display: none;
   }
 
-  .lang-switcher-menu {
-    opacity: 0;
-    transform: translateX(50%) translateY(-4px) scale(0.96);
-    transition: opacity 0.15s ease, transform 0.15s ease;
-    pointer-events: none;
+  @keyframes langMenuIn {
+    from {
+      opacity: 0;
+      transform: translateX(50%) translateY(-4px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(50%) translateY(0) scale(1);
+    }
   }
 
   .lang-switcher[open] .lang-switcher-menu {
-    opacity: 1;
-    transform: translateX(50%) translateY(0) scale(1);
-    pointer-events: auto;
+    animation: langMenuIn 0.15s ease both;
   }
 
   @keyframes fadeIn {
