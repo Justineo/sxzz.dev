@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import { getCollection, render } from 'astro:content'
-import { defaultLang } from '../../i18n/ui'
+import { defaultLang, languages } from '../../i18n/ui'
 import { getLangFromUrl, getLocaleFromLang, useTranslatedPath } from '../../i18n/utils'
 
 export async function getStaticPaths() {
@@ -15,6 +15,10 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props
+const slug = post.id.split('/').slice(1).join('/')
+const allPosts = await getCollection('posts')
+const availableLangs = (Object.keys(languages) as (keyof typeof languages)[])
+  .filter((l) => allPosts.some((p) => p.id === `${l}/${slug}`))
 const { Content } = await render(post)
 const lang = getLangFromUrl(Astro.url)
 const translatePath = useTranslatedPath(lang)
@@ -32,6 +36,7 @@ function formatDate(date: Date) {
 <Layout
   title={`${post.data.title} - Kevin Deng`}
   description={post.data.description}
+  availableLangs={availableLangs}
 >
   <main class="flex-1 px-6 py-16 md:px-12 flex justify-center">
     <article class="max-w-xl w-full">

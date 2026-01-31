@@ -7,9 +7,10 @@ import { getLangFromUrl, getPathWithoutLang, useTranslations, useTranslatedPath 
 interface Props {
   title: string
   description?: string
+  availableLangs?: (keyof typeof languages)[]
 }
 
-const { title, description } = Astro.props
+const { title, description, availableLangs } = Astro.props
 const pathname = Astro.url.pathname
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
@@ -76,22 +77,31 @@ const showLangSwitcher = !basePath.startsWith('/musings')
               </a>
             ))
         }
-        {showLangSwitcher && <div class="flex items-center">
-          <select
-            aria-label={t('lang.switch')}
-            class="bg-transparent text-xs font-600 uppercase tracking-wide text-stone-500 dark:text-stone-400 border border-stone-200/70 dark:border-stone-800/80 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-stone-300/50 dark:focus:ring-stone-700/50"
-            onchange="window.location.href = this.value"
-          >
-            {languageKeys.map((key) => {
+        {showLangSwitcher && <details class="lang-switcher relative text-xs font-600 uppercase tracking-wide">
+          <summary class="list-none cursor-pointer text-stone-400 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 transition-colors duration-200 select-none">
+            {t(`lang.${lang}` as any) ?? languages[lang]}
+          </summary>
+          <div class="lang-switcher-menu absolute right-1/2 translate-x-1/2 mt-2 py-1.5 min-w-22 bg-white/80 dark:bg-stone-900/80 backdrop-blur-sm border border-stone-200/50 dark:border-stone-800/50 rounded-lg shadow-lg z-10">
+            {languageKeys.filter((key) => key !== lang).map((key) => {
               const label = t(`lang.${key}` as any) ?? languages[key]
+              const isAvailable = !availableLangs || availableLangs.includes(key)
+              const href = isAvailable ? translatePath(basePath, key) : translatePath('/', key)
               return (
-                <option value={translatePath(basePath, key)} selected={lang === key}>
+                <a
+                  href={href}
+                  class:list={[
+                    'block px-3 py-1 text-center transition-colors duration-200',
+                    isAvailable
+                      ? 'text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200'
+                      : 'text-stone-300 dark:text-stone-700 line-through',
+                  ]}
+                >
                   {label}
-                </option>
+                </a>
               )
             })}
-          </select>
-        </div>}
+          </div>
+        </details>}
         <button
           id="theme-toggle"
           aria-label={t('toggle.theme')}
@@ -167,9 +177,32 @@ const showLangSwitcher = !basePath.startsWith('/musings')
         document.documentElement.classList.toggle('dark', e.matches)
       }
     })
+
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.lang-switcher[open]').forEach((el) => {
+      if (!el.contains(e.target as Node)) el.removeAttribute('open')
+    })
+  })
 </script>
 
 <style is:global>
+  .lang-switcher summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .lang-switcher-menu {
+    opacity: 0;
+    transform: translateX(50%) translateY(-4px) scale(0.96);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    pointer-events: none;
+  }
+
+  .lang-switcher[open] .lang-switcher-menu {
+    opacity: 1;
+    transform: translateX(50%) translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;
