@@ -9,6 +9,7 @@ export const showDefaultLang = false
 export const ui = {
   en: {
     'nav.posts': 'Posts',
+    'nav.musings': 'Musings',
     'nav.links': 'Links',
     'nav.about': 'About',
     'lang.en': 'EN',
@@ -18,6 +19,7 @@ export const ui = {
   },
   zh: {
     'nav.posts': '文章',
+    'nav.musings': '碎碎念',
     'nav.links': '友链',
     'nav.about': '关于',
     'lang.en': 'EN',

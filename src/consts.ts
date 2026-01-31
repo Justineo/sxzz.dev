@@ -1,8 +1,9 @@
 export const nav = [
   { key: 'nav.posts', href: '/posts' },
+  { key: 'nav.musings', href: '/musings', langs: ['zh'] },
   { key: 'nav.links', href: '/links' },
   { key: 'nav.about', href: '/about' },
-] as const
+] as const satisfies ReadonlyArray<{ key: string; href: string; langs?: readonly string[] }>
 
 /* @unocss-include */
 export const social = [

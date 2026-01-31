@@ -6,7 +6,7 @@ description: A deep dive into defineOptions, defineModel, defineSlots, and more,
 
 ## Preface
 
-Hi, I'm Sanxiaozhizi, a member of the Vue core team. Vue 3.3 focused on improving DX (developer experience), adding some syntax sugar and macros, plus TypeScript improvements.
+Hi, I'm Kevin Deng, a member of the Vue core team. Vue 3.3 focused on improving DX (developer experience), adding some syntax sugar and macros, plus TypeScript improvements.
 
 - Generic components
 - Import external TS types in SFCs
