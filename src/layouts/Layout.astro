@@ -149,7 +149,7 @@ const showLangSwitcher = !basePath.startsWith('/musings')
       {
         social.map((link) => (
           <a
-            href={link.href}
+            href={link.localeHref?.[lang] ?? link.href}
             target="_blank"
             rel="noopener noreferrer"
             class="text-stone-400 dark:text-stone-600 hover:text-stone-700 dark:hover:text-stone-300 transition-colors duration-200"
