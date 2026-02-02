@@ -9,6 +9,7 @@ import {
   useTranslations,
 } from '../i18n/utils'
 import '@unocss/reset/tailwind.css'
+import { pageCopy } from '../i18n/pages'
 
 interface Props {
   title: string
@@ -82,7 +83,7 @@ const hreflangLangs = isMusingsPage
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:url" content={canonicalURL.href} />
-    <meta property="og:site_name" content="Kevin Deng" />
+    <meta property="og:site_name" content={pageCopy.home[lang].name} />
     <meta property="og:type" content={ogType} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:locale" content={locale} />
@@ -110,16 +111,17 @@ const hreflangLangs = isMusingsPage
       )
     }
 
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={title} />
 
     <link
       rel="alternate"
       type="application/rss+xml"
-      title={lang === 'zh' ? '智子' : 'Kevin Deng'}
-      href={new URL(lang === 'zh' ? '/zh/rss.xml' : '/rss.xml', site).href}
+      title={pageCopy.home[lang].name}
+      href={new URL(lang !== 'en' ? `/${lang}/rss.xml` : '/rss.xml', site).href}
     />
 
     <ClientRouter />
@@ -150,10 +152,10 @@ const hreflangLangs = isMusingsPage
         href={translatePath('/')}
         class:list={[
           'flex-shrink-0 text-xl font-600 text-stone-800 dark:text-stone-200 tracking-tight hover:text-stone-500 dark:hover:text-stone-400 transition-colors duration-200',
-          lang !== 'zh' && 'font-serif',
+          pageCopy.home[lang].nameSerif && 'font-serif',
         ]}
       >
-        {lang === 'zh' ? '智子' : 'Kevin Deng'}{
+        {pageCopy.home[lang].name}{
           (pathname === '/' || pathname === '/zh/' || pathname === '/zh') && (
             <span
               class="terminal-cursor ml-0.5 text-base font-mono"
@@ -289,9 +291,7 @@ const hreflangLangs = isMusingsPage
 </html>
 
 <script>
-  const prefersDarkQuery = globalThis.matchMedia(
-    '(prefers-color-scheme: dark)',
-  )
+  const prefersDarkQuery = globalThis.matchMedia('(prefers-color-scheme: dark)')
 
   const applyTheme = (doc = document) => {
     const stored = localStorage.getItem('theme')
@@ -345,9 +345,9 @@ const hreflangLangs = isMusingsPage
       const details = e.target
       if (!(details instanceof HTMLDetailsElement)) return
       if (!details.classList.contains('lang-switcher') || !details.open) return
-      const menu = details.querySelector('.lang-switcher-menu') as
-        | HTMLElement
-        | null
+      const menu = details.querySelector(
+        '.lang-switcher-menu',
+      ) as HTMLElement | null
       if (menu) {
         menu.style.animation = 'none'
         // eslint-disable-next-line no-void -- trigger reflow
