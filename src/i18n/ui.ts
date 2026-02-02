@@ -16,6 +16,7 @@ export const ui = {
     'lang.zh': '中文',
     'lang.switch': 'Switch language',
     'toggle.theme': 'Toggle dark mode',
+    'toc.title': 'On this page',
   },
   zh: {
     'nav.posts': '文章',
@@ -26,6 +27,7 @@ export const ui = {
     'lang.zh': '中文',
     'lang.switch': '切换语言',
     'toggle.theme': '切换深色模式',
+    'toc.title': '目录',
   },
 } as const
 

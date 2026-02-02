@@ -422,6 +422,16 @@ const hreflangLangs = isMusingsPage
     color: inherit;
   }
 
+  html {
+    scroll-padding-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .terminal-cursor {
       animation: none;

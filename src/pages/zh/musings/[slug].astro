@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content'
 import Prose from '../../../components/Prose.astro'
+import TableOfContents from '../../../components/TableOfContents.astro'
 import { getPageCopy } from '../../../i18n/pages'
 import {
   getLangFromUrl,
@@ -19,7 +20,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props
-const { Content } = await render(post)
+const { Content, headings } = await render(post)
 const lang = getLangFromUrl(Astro.url)
 const locale = getLocaleFromLang(lang)
 const translatePath = useTranslatedPath(lang)
@@ -59,8 +60,9 @@ const copy = getPageCopy('musings', lang)
       },
     })}
   />
-  <main class="flex flex-1 justify-center px-6 py-16 md:px-12">
-    <article class="max-w-xl w-full">
+  <main class="flex-1 grid grid-cols-[1fr_minmax(0,36rem)_1fr] px-6 py-16 md:px-12">
+    <div></div>
+    <article class="w-full min-w-0">
       <header class="fade-in-up mb-10" style="animation-delay: 80ms">
         <a
           href={translatePath('/musings')}
@@ -82,5 +84,11 @@ const copy = getPageCopy('musings', lang)
         <Content />
       </Prose>
     </article>
+    <div class="hidden pl-12 xl:block fade-in-up" style="animation-delay: 240ms">
+      <TableOfContents headings={headings} lang={lang} />
+    </div>
   </main>
+  <script>
+    import '../../../scripts/toc'
+  </script>
 </Layout>
