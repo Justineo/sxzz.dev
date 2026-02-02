@@ -92,4 +92,10 @@ export const friends: Friend[] = [
     avatar: 'https://spacexc.net/logo.png',
     href: 'https://spacexc.net/',
   },
+  {
+    name: '雪糕',
+    bio: '',
+    avatar: 'https://static.lyc.sh/2022/10/cropped-profile.png',
+    href: 'https://blog.lyc.sh/',
+  },
 ]
