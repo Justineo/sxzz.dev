@@ -8,6 +8,16 @@ export function getPostSlug(id: string) {
   return id.split('/').slice(1).join('/')
 }
 
+export function getPostOgImagePath(id: string) {
+  const [lang, ...rest] = id.split('/')
+  const slug = rest.join('/')
+  return `/og/posts/${lang}/${slug}.png`
+}
+
+export function getMusingOgImagePath(id: string, lang = 'zh') {
+  return `/og/musings/${lang}/${id}.png`
+}
+
 export async function getPostPaths(lang: Lang) {
   const posts = await getCollection('posts')
   return posts

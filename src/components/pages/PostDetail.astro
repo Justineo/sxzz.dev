@@ -7,7 +7,7 @@ import {
   type Lang,
 } from '../../i18n/utils'
 import Layout from '../../layouts/Layout.astro'
-import { formatDate } from '../../utils/content'
+import { formatDate, getPostOgImagePath } from '../../utils/content'
 import Prose from '../Prose.astro'
 import TableOfContents from '../TableOfContents.astro'
 
@@ -22,6 +22,7 @@ const { Content, headings } = await render(post)
 const translatePath = useTranslatedPath(lang)
 const copy = getPageCopy('post', lang)
 const locale = getLocaleFromLang(lang)
+const ogImage = post.data.image ?? getPostOgImagePath(post.id)
 const author =
   lang === 'zh'
     ? {
@@ -37,6 +38,7 @@ const schema = {
   headline: post.data.title,
   description: post.data.description,
   datePublished: post.data.date.toISOString(),
+  image: new URL(ogImage, Astro.site).href,
   url: Astro.url.href,
   inLanguage: locale,
   author,
@@ -48,6 +50,7 @@ const schema = {
   description={post.data.description}
   availableLangs={availableLangs}
   ogType="article"
+  image={ogImage}
   publishedDate={post.data.date}
 >
   <script
@@ -55,9 +58,9 @@ const schema = {
     type="application/ld+json"
     set:html={JSON.stringify(schema)}
   />
-  <main class="flex-1 grid grid-cols-[1fr_minmax(0,36rem)_1fr] px-6 py-16 md:px-12">
+  <main class="grid grid-cols-[1fr_minmax(0,36rem)_1fr] flex-1 px-6 py-16 md:px-12">
     <div></div>
-    <article class="w-full min-w-0">
+    <article class="min-w-0 w-full">
       <header class="fade-in-up mb-10" style="animation-delay: 80ms">
         <a
           href={translatePath('/posts')}
@@ -83,7 +86,7 @@ const schema = {
         <Content />
       </Prose>
     </article>
-    <div class="hidden pl-12 xl:block fade-in-up" style="animation-delay: 240ms">
+    <div class="fade-in-up hidden pl-12 xl:block" style="animation-delay: 240ms">
       <TableOfContents headings={headings} lang={lang} />
     </div>
   </main>

@@ -9,7 +9,7 @@ import {
   useTranslatedPath,
 } from '../../../i18n/utils'
 import Layout from '../../../layouts/Layout.astro'
-import { formatDate } from '../../../utils/content'
+import { formatDate, getMusingOgImagePath } from '../../../utils/content'
 
 export async function getStaticPaths() {
   const musings = await getCollection('musings')
@@ -25,13 +25,14 @@ const lang = getLangFromUrl(Astro.url)
 const locale = getLocaleFromLang(lang)
 const translatePath = useTranslatedPath(lang)
 const copy = getPageCopy('musings', lang)
+const ogImage = post.data.image ?? getMusingOgImagePath(post.id, lang)
 ---
 
 <Layout
   title={`${post.data.title} - ${copy.titleSuffix}`}
   description={post.data.description}
   ogType="article"
-  image={post.data.image}
+  image={ogImage}
   publishedDate={post.data.date}
   updatedDate={post.data.updatedAt}
 >
@@ -47,9 +48,7 @@ const copy = getPageCopy('musings', lang)
       ...(post.data.updatedAt && {
         dateModified: post.data.updatedAt.toISOString(),
       }),
-      ...(post.data.image && {
-        image: new URL(post.data.image, Astro.site).href,
-      }),
+      image: new URL(ogImage, Astro.site).href,
       url: Astro.url.href,
       inLanguage: locale,
       author: {
@@ -60,9 +59,9 @@ const copy = getPageCopy('musings', lang)
       },
     })}
   />
-  <main class="flex-1 grid grid-cols-[1fr_minmax(0,36rem)_1fr] px-6 py-16 md:px-12">
+  <main class="grid grid-cols-[1fr_minmax(0,36rem)_1fr] flex-1 px-6 py-16 md:px-12">
     <div></div>
-    <article class="w-full min-w-0">
+    <article class="min-w-0 w-full">
       <header class="fade-in-up mb-10" style="animation-delay: 80ms">
         <a
           href={translatePath('/musings')}
@@ -84,7 +83,7 @@ const copy = getPageCopy('musings', lang)
         <Content />
       </Prose>
     </article>
-    <div class="hidden pl-12 xl:block fade-in-up" style="animation-delay: 240ms">
+    <div class="fade-in-up hidden pl-12 xl:block" style="animation-delay: 240ms">
       <TableOfContents headings={headings} lang={lang} />
     </div>
   </main>

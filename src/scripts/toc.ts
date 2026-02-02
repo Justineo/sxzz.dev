@@ -6,7 +6,9 @@ if (toc) {
   links.forEach((link) => {
     const slug = link.dataset.headingSlug
     if (slug) {
-      const heading = document.getElementById(slug)
+      const heading = document.querySelector<HTMLElement>(
+        `#${CSS.escape(slug)}`,
+      )
       if (heading) headingElements.push(heading)
     }
   })

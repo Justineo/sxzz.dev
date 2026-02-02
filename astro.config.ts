@@ -13,4 +13,9 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkGithubBlockquoteAlert],
   },
+  vite: {
+    ssr: {
+      external: ['@resvg/resvg-js'],
+    },
+  },
 })
