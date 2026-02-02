@@ -301,7 +301,11 @@ const hreflangLangs = isMusingsPage
 
   const toggleTheme = () => {
     const isDark = !document.documentElement.classList.contains('dark')
-    localStorage.setItem('theme', isDark ? 'dark' : 'light')
+    if (isDark === prefersDarkQuery.matches) {
+      localStorage.removeItem('theme')
+    } else {
+      localStorage.setItem('theme', isDark ? 'dark' : 'light')
+    }
     document.documentElement.classList.toggle('dark', isDark)
   }
 
