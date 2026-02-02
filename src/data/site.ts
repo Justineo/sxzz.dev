@@ -94,7 +94,7 @@ export const friends: Friend[] = [
   },
   {
     name: '雪糕',
-    bio: '',
+    bio: '人對愛和永遠 應該有幻覺',
     avatar: 'https://static.lyc.sh/2022/10/cropped-profile.png',
     href: 'https://blog.lyc.sh/',
   },
