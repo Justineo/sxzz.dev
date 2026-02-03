@@ -1,4 +1,3 @@
-import cloudflare from '@astrojs/cloudflare'
 import sitemap from '@astrojs/sitemap'
 import UnoCSS from '@unocss/astro'
 import { defineConfig } from 'astro/config'
@@ -7,15 +6,10 @@ import remarkGithubBlockquoteAlert from 'remark-github-blockquote-alert'
 // https://astro.build/config
 export default defineConfig({
   site: 'https://sxzz.dev',
+  output: 'static',
   prefetch: true,
   integrations: [UnoCSS(), sitemap()],
-  adapter: cloudflare({ imageService: 'compile' }),
   markdown: {
     remarkPlugins: [remarkGithubBlockquoteAlert],
-  },
-  vite: {
-    ssr: {
-      external: ['@resvg/resvg-js'],
-    },
   },
 })
