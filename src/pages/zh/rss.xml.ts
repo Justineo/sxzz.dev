@@ -1,5 +1,6 @@
 import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
+import { siteCopy } from '../../data/site'
 import type { APIContext } from 'astro'
 
 export async function GET(context: APIContext) {
@@ -26,9 +27,10 @@ export async function GET(context: APIContext) {
     (a, b) => b.pubDate.getTime() - a.pubDate.getTime(),
   )
 
+  const rssCopy = siteCopy.rss.zh
   return rss({
-    title: '智子',
-    description: '智子的博客与碎碎念。',
+    title: rssCopy.title,
+    description: rssCopy.description,
     site: context.site!,
     items,
   })

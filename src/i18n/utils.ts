@@ -38,3 +38,7 @@ export function getPathWithoutLang(pathname: string): string {
   }
   return pathname === '' ? '/' : pathname
 }
+
+export function getUrlPrefix(lang: Lang): string {
+  return !showDefaultLang && lang === defaultLang ? '' : `/${lang}`
+}

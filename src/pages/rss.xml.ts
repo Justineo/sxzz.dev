@@ -1,5 +1,6 @@
 import rss, { type RSSFeedItem } from '@astrojs/rss'
 import { getCollection } from 'astro:content'
+import { siteCopy } from '../data/site'
 import { defaultLang } from '../i18n/ui'
 import type { APIContext } from 'astro'
 
@@ -8,9 +9,10 @@ export async function GET(context: APIContext) {
     .filter((post) => post.id.startsWith(`${defaultLang}/`))
     .toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime())
 
+  const rssCopy = siteCopy.rss[defaultLang]
   return rss({
-    title: 'Kevin Deng',
-    description: 'Blog posts by Kevin Deng, an open-source enthusiast.',
+    title: rssCopy.title,
+    description: rssCopy.description,
     site: context.site!,
     items: posts.map((post): RSSFeedItem => {
       const slug = post.id.split('/').slice(1).join('/')

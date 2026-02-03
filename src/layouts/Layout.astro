@@ -1,15 +1,17 @@
 ---
 import { ClientRouter } from 'astro:transitions'
 import { nav, social } from '../consts'
+import { siteMeta } from '../data/site'
+import { pageCopy } from '../i18n/pages'
 import { defaultLang, languages, localeByLang } from '../i18n/ui'
 import {
   getLangFromUrl,
   getPathWithoutLang,
+  getUrlPrefix,
   useTranslatedPath,
   useTranslations,
 } from '../i18n/utils'
 import '@unocss/reset/tailwind.css'
-import { pageCopy } from '../i18n/pages'
 
 interface Props {
   title: string
@@ -121,15 +123,15 @@ const hreflangLangs = isMusingsPage
       rel="alternate"
       type="application/rss+xml"
       title={pageCopy.home[lang].name}
-      href={new URL(lang !== 'en' ? `/${lang}/rss.xml` : '/rss.xml', site).href}
+      href={new URL(`${getUrlPrefix(lang)}/rss.xml`, site).href}
     />
 
     <ClientRouter />
     <slot name="head" />
     <script
       defer
-      data-domain="sxzz.dev"
-      src="https://analytics.sxzz.dev/js/script.js"></script>
+      data-domain={siteMeta.analytics.domain}
+      src={siteMeta.analytics.scriptSrc}></script>
     <script is:inline>
       ;(function () {
         const stored = localStorage.getItem('theme')
@@ -222,7 +224,7 @@ const hreflangLangs = isMusingsPage
           )
         }
         <a
-          href={new URL(lang === 'zh' ? '/zh/rss.xml' : '/rss.xml', site).href}
+          href={new URL(`${getUrlPrefix(lang)}/rss.xml`, site).href}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="RSS"
@@ -318,19 +320,17 @@ const hreflangLangs = isMusingsPage
     minimum: 0.08,
   })
 
-  let nprogressTimer = 0
-
-  const startProgress = () => {
+  let nprogressTimer: number | undefined
+  function startProgress() {
     if (nprogressTimer) return
     nprogressTimer = window.setTimeout(() => {
       NProgress.start()
     }, 120)
   }
-
-  const stopProgress = () => {
-    if (nprogressTimer) {
+  function stopProgress() {
+    if (nprogressTimer == null) {
       clearTimeout(nprogressTimer)
-      nprogressTimer = 0
+      nprogressTimer = undefined
     }
     NProgress.done(true)
   }
@@ -375,9 +375,7 @@ const hreflangLangs = isMusingsPage
       const details = e.target
       if (!(details instanceof HTMLDetailsElement)) return
       if (!details.classList.contains('lang-switcher') || !details.open) return
-      const menu = details.querySelector(
-        '.lang-switcher-menu',
-      ) as HTMLElement | null
+      const menu = details.querySelector<HTMLElement>('.lang-switcher-menu')
       if (menu) {
         menu.style.animation = 'none'
         // eslint-disable-next-line no-void -- trigger reflow
@@ -480,7 +478,8 @@ const hreflangLangs = isMusingsPage
     right: 0;
     width: 100px;
     height: 100%;
-    box-shadow: 0 0 6px var(--nprogress-color),
+    box-shadow:
+      0 0 6px var(--nprogress-color),
       0 0 3px var(--nprogress-color);
     opacity: 1;
     transform: rotate(3deg) translate(0, -4px);

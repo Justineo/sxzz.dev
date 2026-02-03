@@ -5,7 +5,7 @@ import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import { Resvg } from '@resvg/resvg-js'
 import satori, { type Font } from 'satori'
-import { pageCopy } from '../i18n/pages'
+import { siteCopy, siteMeta } from '../data/site'
 import { ui } from '../i18n/ui'
 import { getLocaleFromLang, type Lang } from '../i18n/utils'
 
@@ -52,8 +52,8 @@ const kindNavKeys = {
   musing: 'nav.musings',
 } as const satisfies Record<OgKind, keyof (typeof ui)['en']>
 
-let fontsPromise: Promise<Font[]> | null = null
-let avatarDataUrl: string | null = null
+let fontsPromise: Promise<Font[]> | undefined
+let avatarDataUrl: string | undefined
 
 const cjkRegex = /[\u4E00-\u9FFF]/
 const latinRegex = /[A-Z0-9]/i
@@ -126,7 +126,7 @@ export async function renderOgImage({
         day: 'numeric',
       })
     : ''
-  const author = pageCopy.home[lang].name
+  const author = siteCopy.author.displayName[lang]
 
   const svg = await satori(
     {
@@ -267,7 +267,7 @@ export async function renderOgImage({
                             color: '#a8a29e',
                             letterSpacing: isZh ? '0px' : '0.12em',
                           },
-                          children: 'sxzz.dev',
+                          children: siteMeta.domain,
                         },
                       },
                     ],
@@ -334,7 +334,7 @@ export async function renderDefaultOgImage(): Promise<Buffer> {
                 color: '#1c1917',
                 letterSpacing: '-0.02em',
               },
-              children: 'Kevin Deng',
+              children: siteCopy.author.canonicalName,
             },
           },
           {
@@ -347,7 +347,7 @@ export async function renderDefaultOgImage(): Promise<Buffer> {
                 fontWeight: 400,
                 color: '#a8a29e',
               },
-              children: 'Open-source enthusiast',
+              children: siteCopy.author.tagline.en,
             },
           },
           {
@@ -360,7 +360,7 @@ export async function renderDefaultOgImage(): Promise<Buffer> {
                 color: '#78716c',
                 letterSpacing: '0.05em',
               },
-              children: 'sxzz.dev',
+              children: siteMeta.domain,
             },
           },
         ],

@@ -1,3 +1,91 @@
+import type { Lang } from '../i18n/utils'
+
+type Localized<T> = Record<Lang, T>
+
+interface AuthorSchema {
+  '@type': 'Person'
+  name: string
+  url: string
+  alternateName?: string
+  sameAs?: readonly string[]
+}
+
+export const siteMeta = {
+  domain: 'sxzz.dev',
+  url: 'https://sxzz.dev',
+  analytics: {
+    domain: 'sxzz.dev',
+    scriptSrc: 'https://analytics.sxzz.dev/js/script.js',
+  },
+} as const
+
+export const siteCopy = {
+  author: {
+    canonicalName: 'Kevin Deng',
+    alternateName: '智子',
+    displayName: {
+      en: 'Kevin Deng',
+      zh: '智子',
+    },
+    tagline: {
+      en: 'Open-source enthusiast',
+      zh: 'INFP • 开源爱好者',
+    },
+    titleRole: {
+      en: 'Open Source Enthusiast',
+      zh: '开源爱好者',
+    },
+    sameAs: {
+      en: [
+        'https://github.com/sxzz',
+        'https://x.com/sanxiaozhizi',
+        'https://x.com/zhizijun',
+        'https://bsky.app/profile/sxzz.dev',
+      ],
+      zh: [
+        'https://github.com/sxzz',
+        'https://x.com/zhizijun',
+        'https://bsky.app/profile/sxzz.dev',
+      ],
+    },
+  },
+  rss: {
+    en: {
+      title: 'Kevin Deng',
+      description: 'Blog posts by Kevin Deng, an open-source enthusiast.',
+    },
+    zh: {
+      title: '智子',
+      description: '智子的博客与碎碎念。',
+    },
+  },
+} as const satisfies {
+  author: {
+    canonicalName: string
+    alternateName: string
+    displayName: Localized<string>
+    tagline: Localized<string>
+    titleRole: Localized<string>
+    sameAs: Localized<readonly string[]>
+  }
+  rss: Localized<{ title: string; description: string }>
+}
+
+export function getAuthorSchema(
+  lang: Lang,
+  options: { includeAlternate?: boolean; includeSameAs?: boolean } = {},
+): AuthorSchema {
+  const includeAlternate = options.includeAlternate ?? lang === 'zh'
+  const schema: AuthorSchema = {
+    '@type': 'Person',
+    name: siteCopy.author.canonicalName,
+    url: siteMeta.url,
+    ...(includeAlternate && { alternateName: siteCopy.author.alternateName }),
+    ...(options.includeSameAs && { sameAs: siteCopy.author.sameAs[lang] }),
+  }
+  return schema
+}
+
 interface Link {
   name: string
   href: string

@@ -28,10 +28,7 @@ export const GET: APIRoute = async ({ props }) => {
     kind: 'musing',
     date: post.data.date,
   })
-  const buffer =
-    png.buffer instanceof ArrayBuffer ? png.buffer : new Uint8Array(png).buffer
-  const body = buffer.slice(png.byteOffset, png.byteOffset + png.byteLength)
-  return new Response(body, {
+  return new Response(new Uint8Array(png), {
     headers: {
       'Content-Type': 'image/png',
       'Cache-Control': 'public, max-age=31536000, immutable',

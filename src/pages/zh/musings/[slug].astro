@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content'
 import Prose from '../../../components/Prose.astro'
 import TableOfContents from '../../../components/TableOfContents.astro'
+import { getAuthorSchema } from '../../../data/site'
 import { getPageCopy } from '../../../i18n/pages'
 import {
   getLangFromUrl,
@@ -51,12 +52,7 @@ const ogImage = post.data.image ?? getMusingOgImagePath(post.id, lang)
       image: new URL(ogImage, Astro.site).href,
       url: Astro.url.href,
       inLanguage: locale,
-      author: {
-        '@type': 'Person',
-        name: 'Kevin Deng',
-        alternateName: '智子',
-        url: 'https://sxzz.dev',
-      },
+      author: getAuthorSchema(lang),
     })}
   />
   <main class="grid grid-cols-[1fr_minmax(0,36rem)_1fr] flex-1 px-6 py-16 md:px-12">

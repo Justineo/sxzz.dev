@@ -1,5 +1,5 @@
 ---
-import { homeLinks } from '../../data/site'
+import { getAuthorSchema, homeLinks } from '../../data/site'
 import { getPageCopy } from '../../i18n/pages'
 import Layout from '../../layouts/Layout.astro'
 import type { Lang } from '../../i18n/utils'
@@ -15,13 +15,10 @@ const schema = {
   '@type': 'WebSite',
   name: copy.schema.name,
   url: copy.schema.url,
-  author: {
-    '@type': 'Person',
-    name: 'Kevin Deng',
-    alternateName: '智子',
-    url: 'https://sxzz.dev',
-    sameAs: copy.schema.sameAs,
-  },
+  author: getAuthorSchema(lang, {
+    includeAlternate: true,
+    includeSameAs: true,
+  }),
 }
 ---
 

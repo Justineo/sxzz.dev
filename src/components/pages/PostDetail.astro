@@ -1,5 +1,6 @@
 ---
 import { render, type CollectionEntry } from 'astro:content'
+import { getAuthorSchema } from '../../data/site'
 import { getPageCopy } from '../../i18n/pages'
 import {
   getLocaleFromLang,
@@ -23,15 +24,7 @@ const translatePath = useTranslatedPath(lang)
 const copy = getPageCopy('post', lang)
 const locale = getLocaleFromLang(lang)
 const ogImage = post.data.image ?? getPostOgImagePath(post.id)
-const author =
-  lang === 'zh'
-    ? {
-        '@type': 'Person',
-        name: 'Kevin Deng',
-        alternateName: '智子',
-        url: 'https://sxzz.dev',
-      }
-    : { '@type': 'Person', name: 'Kevin Deng', url: 'https://sxzz.dev' }
+const author = getAuthorSchema(lang)
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
