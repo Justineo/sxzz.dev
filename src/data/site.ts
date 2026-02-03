@@ -122,4 +122,17 @@ export const friends: Friend[] = [
     avatar: 'https://avatars.githubusercontent.com/u/45784494?v=4',
     href: 'https://lcandy.me/',
   },
+  {
+    name: '余弦の博客',
+    bio: 'FE / ACG / 手工 / 深色模式强迫症 / INFP / 兴趣广泛养两只猫的老宅女 / remote',
+    avatar: 'https://blog.cosine.ren/img/avatar.webp',
+    href: 'https://blog.cosine.ren/',
+  },
+  {
+    name: '溴化锂的笔记本',
+    bio: '醉后不知天在水，满船清梦压星河。',
+    avatar:
+      'https://gravatar.com/avatar/29d64df3ca2a9dac5a7fffa5372fb80fb3270ceb223de2af0c33cdc4b2cbe954?v=1687917579000&size=256&d=initials',
+    href: 'https://nvme0n1p.dev',
+  },
 ]
