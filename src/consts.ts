@@ -3,10 +3,10 @@ export const nav: ReadonlyArray<{
   href: string
   langs?: readonly string[]
 }> = [
-  { key: 'nav.posts', href: '/posts' },
-  { key: 'nav.musings', href: '/musings', langs: ['zh'] },
-  { key: 'nav.links', href: '/links' },
-  { key: 'nav.about', href: '/about' },
+  { key: 'nav.posts', href: '/posts/' },
+  { key: 'nav.musings', href: '/musings/', langs: ['zh'] },
+  { key: 'nav.links', href: '/links/' },
+  { key: 'nav.about', href: '/about/' },
 ]
 
 /* @unocss-include */

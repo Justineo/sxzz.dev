@@ -30,7 +30,7 @@ const copy = getPageCopy('posts', lang)
           posts.map((post) => (
             <li>
               <a
-                href={translatePath(`/posts/${post.slug}`)}
+                href={translatePath(`/posts/${post.slug}/`)}
                 class="group flex items-baseline gap-4 py-3 transition-colors duration-200"
               >
                 <time class="shrink-0 text-xs text-stone-500 tabular-nums dark:text-stone-400">

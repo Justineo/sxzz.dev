@@ -30,7 +30,7 @@ const musings = (await getCollection('musings')).toSorted(
           musings.map((post) => (
             <li>
               <a
-                href={translatePath(`/musings/${post.id}`)}
+                href={translatePath(`/musings/${post.id}/`)}
                 class="group flex items-baseline gap-4 py-3 transition-colors duration-200"
               >
                 <time class="shrink-0 text-xs text-stone-500 tabular-nums dark:text-stone-400">
