@@ -149,7 +149,7 @@ export const pageCopy: PageCopy = {
   issueAwards: {
     en: {
       title: `Issue Awards - ${authorName.en}`,
-      description: `A curated wall of the #迷惑issue大赏 tweets shared by ${authorName.en}.`,
+      description: `A curated collection of the #迷惑issue大赏 tweets shared by ${authorName.en}.`,
       heading: 'Issue Awards',
       intro:
         'Collected highlights from the #迷惑issue大赏 hashtag. These are snapshots of the funniest and most confusing issues encountered in open source.',
